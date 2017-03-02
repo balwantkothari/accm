@@ -1,0 +1,72 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+  
+ 	<mvc:annotation-driven/>  
+	<context:component-scan base-package="com.balwant.account.accm.controller" />  
+	<bean name="viewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+	<bean name="jsonTemplate"
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+  
+  	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="org.hsqldb.jdbc.JDBCDriver" />
+		<property name="jdbcUrl" value="jdbc:hsqldb:hsql://localhost/accounts" />
+		<property name="user" value="sa" />
+		<property name="password" value="" />
+		<property name="maxPoolSize" value="30" />
+		<property name="minPoolSize" value="3" />
+<!-- 		<property name="preferredTestQuery" value="${db.preferredTestQuery}"></property> -->
+		<property name="initialPoolSize" value="3"></property>
+<!-- 		<property name="idleConnectionTestPeriod" value="${db.idleConnectionTestPeriod}"></property>
+ -->	</bean>
+
+
+	<!-- Hibernate 4 SessionFactory Bean definition -->
+	<bean id="hibernate4AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.balwant.account.accm.model" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<!-- <prop key="hibernate.order_updates">true</prop> -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">validate</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+  
+  	<bean id="customerDao" class="com.balwant.account.accm.dao.impl.CustomerDAO"></bean>
+   	<bean id="depositDao" class="com.balwant.account.accm.dao.impl.DepositDAO"></bean>
+   	<bean id="loanDao" class="com.balwant.account.accm.dao.impl.LoanDAO"></bean>
+   	<bean id="userDao" class="com.balwant.account.accm.dao.impl.UserDAO"></bean>
+   	
+   	<bean id="customerService" class="com.balwant.account.accm.service.impl.CustomerService"></bean>
+   	<bean id="depositService" class="com.balwant.account.accm.service.impl.DepositService"></bean>
+   	<bean id="loanService" class="com.balwant.account.accm.service.impl.LoanService"></bean>
+   	<bean id="userService" class="com.balwant.account.accm.service.impl.UserService"></bean>
+   	
+   <bean id="interestCalculator" class="com.balwant.account.accm.util.InterestCalculator">
+   	<property name="calculateSimpleInterest" value="false"></property>
+   	<property name="reviseInMonths" value="6"></property>
+   </bean>
+   	
+   		 
+</beans> 

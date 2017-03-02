@@ -1,0 +1,8 @@
+0:0:0:0:0:0:0:1 - - [20/Feb/2017:13:18:36 +0530] "GET /accm/customer/get/2 HTTP/1.1" 200 144 http-bio-8080-exec-4 737
+0:0:0:0:0:0:0:1 - - [20/Feb/2017:13:24:31 +0530] "POST /accm/customer/add HTTP/1.1" 201 - http-bio-8080-exec-1 603
+0:0:0:0:0:0:0:1 - - [20/Feb/2017:13:24:41 +0530] "GET /accm/customer/get/3 HTTP/1.1" 200 298 http-bio-8080-exec-3 114
+0:0:0:0:0:0:0:1 - - [20/Feb/2017:14:24:02 +0530] "POST /accm/loan/add HTTP/1.1" 201 - http-bio-8080-exec-6 75
+fe80:0:0:0:6a5b:35ff:fec8:dad5%7 - - [20/Feb/2017:17:57:08 +0530] "GET / HTTP/1.1" 404 - http-bio-8080-exec-8 0
+fe80:0:0:0:6a5b:35ff:fec8:dad5%7 - - [20/Feb/2017:17:57:08 +0530] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-9 0
+fe80:0:0:0:6a5b:35ff:fec8:dad5%7 - - [20/Feb/2017:17:57:08 +0530] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 - http-bio-8080-exec-1 0
+fe80:0:0:0:6a5b:35ff:fec8:dad5%7 - - [20/Feb/2017:17:57:08 +0530] "GET /apple-touch-icon.png HTTP/1.1" 404 - http-bio-8080-exec-1 0

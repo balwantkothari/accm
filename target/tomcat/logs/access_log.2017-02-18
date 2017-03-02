@@ -1,0 +1,7 @@
+fe80:0:0:0:6e40:8ff:fea3:b322%4 - - [18/Feb/2017:00:47:47 +0530] "GET / HTTP/1.1" 404 - http-bio-8080-exec-9 0
+fe80:0:0:0:6e40:8ff:fea3:b322%4 - - [18/Feb/2017:00:47:47 +0530] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 - http-bio-8080-exec-1 0
+fe80:0:0:0:6e40:8ff:fea3:b322%4 - - [18/Feb/2017:00:47:47 +0530] "GET /apple-touch-icon.png HTTP/1.1" 404 - http-bio-8080-exec-1 0
+fe80:0:0:0:6e40:8ff:fea3:b322%4 - - [18/Feb/2017:00:47:47 +0530] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-3 0
+fe80:0:0:0:6e40:8ff:fea3:b322%4 - - [18/Feb/2017:00:47:47 +0530] "GET / HTTP/1.1" 404 - http-bio-8080-exec-10 0
+fe80:0:0:0:6e40:8ff:fea3:b322%4 - - [18/Feb/2017:00:47:47 +0530] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 - http-bio-8080-exec-1 0
+fe80:0:0:0:6e40:8ff:fea3:b322%4 - - [18/Feb/2017:00:47:47 +0530] "GET /apple-touch-icon.png HTTP/1.1" 404 - http-bio-8080-exec-1 0
