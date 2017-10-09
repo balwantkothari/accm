@@ -42,18 +42,20 @@ public class InterestCalculator {
 	
 	private Map<Date, Double> calculateAmount(double principal, float rate, Date loanDate, Set<Deposit> deposits) {
 		Date finalDate = new Date(System.currentTimeMillis());
-		Map<Date,Double> amountDetails = new LinkedHashMap<Date, Double>();
+		LinkedHashMap<Date,Double> amountDetails = new LinkedHashMap<Date, Double>();
 		double amount = principal;
 		Date initialLoanDate = loanDate;
 		Calendar cal = Calendar.getInstance();
+		System.out.println("Simple Interest :" + isCalculateSimpleInterest() );
 		for(Deposit deposit : deposits) {
 			getInterestAmount(amount, rate, initialLoanDate, deposit.getDepositDate(), amountDetails);
 			cal.setTime(deposit.getDepositDate());
 			cal.add(Calendar.DATE, 1);
 			initialLoanDate= cal.getTime();
+			amount = amountDetails.get(deposit.getDepositDate()) - deposit.getDepositAmount();
+			System.out.println("Amount :" + amount);
 		}
 		return getInterestAmount(amount, rate, initialLoanDate, finalDate, amountDetails);
-		
 	}
 	
 	private Map<Date, Double> getInterestAmount(double principal, float rate, Date loanDate, Date depositDate, Map<Date, Double> amountDetails) {
@@ -114,20 +116,13 @@ public class InterestCalculator {
 		int depositDay = depositCal .get(Calendar.DAY_OF_MONTH);
 		
 		double amount = 0;
-		double timeInMonths = (((loanYear - depositYear)*12 + (loanMonth-depositMonth) + (loanDay-depositDay)/30));
-		if(timeInMonths > getReviseInMonths()) {
-			while(timeInMonths > getReviseInMonths()) {
-				loanCal.add(Calendar.MONTH, getReviseInMonths());
-				amount = amount + (principal * getReviseInMonths() * rate)/100;
-				amountDetails.put(loanCal.getTime(), amount);
-				timeInMonths = timeInMonths - getReviseInMonths();
-			}
-		}
-		amount = amount + (principal * timeInMonths * rate)/100;
+		double timeInMonths = (((depositYear - loanYear)*12 + (depositMonth - loanMonth ) + (depositDay-loanDay)/30));
+		System.out.println("Loan Date :" + loanDate.toGMTString());
+		System.out.println("Final Date :" + depositDate.toGMTString());		
+		System.out.println("Time in Months :" + timeInMonths);
+		amount = principal + (principal * timeInMonths * rate)/100;
+		System.out.println("Amount ---" + amount);
 		amountDetails.put(depositDate, amount);
 		return amountDetails;
-	}
-
-	
-	
+	}	
 }
