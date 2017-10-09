@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="300">
+<Properties>
+	<Property name="log-path">${sys:catalina.base}/logs</Property>
+</Properties>
+
+	<Appenders>
+		<RollingFile name="InfoLog" fileName="${log-path}/accm_error.log" filePattern="${log-path}/accm_error-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="4" />
+		</RollingFile>
+		<RollingFile name="ErrorLog" fileName="${log-path}/accm_error.log" filePattern="${log-path}/accm_error-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="4" />
+		</RollingFile>
+		<RollingFile name="DebugLog" fileName="${log-path}/accm_debug.log" filePattern="${log-path}/accm_debug-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="4" />
+		</RollingFile>		
+	</Appenders>
+	
+	<Loggers>
+		<Root level="error">
+			<AppenderRef ref="InfoLog" />
+		</Root>
+		<Logger name="ErrorLog" level="error" additivity="false">
+			<AppenderRef ref="ErrorLog" />
+		</Logger>
+		<Logger name="DebugLog" level="debug" additivity="false">
+			<AppenderRef ref="DebugLog" />
+		</Logger>
+	</Loggers>
+</Configuration>
