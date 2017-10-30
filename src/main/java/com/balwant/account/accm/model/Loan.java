@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.balwant.account.accm.util.AccmUtils;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -33,11 +35,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name="ACCOUNTS.LOAN")
 public class Loan implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	@Transient
+	private final StringBuilder builder = new StringBuilder();
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="LOAN_ID")
-	private int loanId;
+	private Integer loanId;
 
 	@Column(name="COMMENT")
 	private String comment;
@@ -45,7 +50,7 @@ public class Loan implements Serializable {
 	private String item;
 
 	@Column(name="LOAN_AMOUNT")
-	private double loanAmount;
+	private Double loanAmount;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="LOAN_DATE")
@@ -55,12 +60,12 @@ public class Loan implements Serializable {
 	private LoanStatus loanStatus;
 
 	@Column(name="LOAN_TYPE")
-	private int loanType;
+	private Integer loanType;
 
 	@Transient
 	Map<Date, Double> amountDetails;
 	
-	private float rate;
+	private Float rate;
 
 	//bi-directional many-to-one association to Deposit
 	@OneToMany(mappedBy="loan")
@@ -74,11 +79,11 @@ public class Loan implements Serializable {
 	@JsonBackReference
 	private Customer customer;
 
-	public int getLoanId() {
+	public Integer getLoanId() {
 		return this.loanId;
 	}
 
-	public void setLoanId(int loanId) {
+	public void setLoanId(Integer loanId) {
 		this.loanId = loanId;
 	}
 
@@ -98,11 +103,11 @@ public class Loan implements Serializable {
 		this.item = item;
 	}
 
-	public double getLoanAmount() {
+	public Double getLoanAmount() {
 		return this.loanAmount;
 	}
 
-	public void setLoanAmount(double loanAmount) {
+	public void setLoanAmount(Double loanAmount) {
 		this.loanAmount = loanAmount;
 	}
 
@@ -122,19 +127,19 @@ public class Loan implements Serializable {
 		this.loanStatus = loanStatus;
 	}
 
-	public int getLoanType() {
+	public Integer getLoanType() {
 		return this.loanType;
 	}
 
-	public void setLoanType(int loanType) {
+	public void setLoanType(Integer loanType) {
 		this.loanType = loanType;
 	}
 
-	public float getRate() {
+	public Float getRate() {
 		return this.rate;
 	}
 
-	public void setRate(float rate) {
+	public void setRate(Float rate) {
 		this.rate = rate;
 	}
 
@@ -190,5 +195,42 @@ public class Loan implements Serializable {
 		
 		return false;
 	}
-	
+
+	@Override
+	public String toString() {
+		builder.setLength(0);
+		builder.append("Loan [loanId=");
+		builder.append(loanId);
+		builder.append(", comment=");
+		builder.append(comment);
+		builder.append(", item=");
+		builder.append(item);
+		builder.append(", loanAmount=");
+		builder.append(loanAmount);
+		builder.append(", loanDate=");
+		builder.append(loanDate);
+		builder.append(", loanStatus=");
+		builder.append(loanStatus);
+		builder.append(", loanType=");
+		builder.append(loanType);
+		builder.append(", amountDetails={ ");
+		if(!AccmUtils.isNullOrEmpty(amountDetails)) {
+			 builder.append(amountDetails.entrySet().stream()
+			  .map(entry -> "[Date :" + entry.getKey() + ", Amount :" + entry.getValue() + "]")
+			  .collect(Collectors.joining(", ")));
+		} 
+		builder.append(" }");
+		builder.append(", rate=");
+		builder.append(rate);
+		builder.append(", deposits={ ");
+		if(!AccmUtils.isNullOrEmpty(deposits)) {
+			builder.append(deposits.stream().map(deposit -> "[Deposit Date : "+ deposit.getDepositDate() + ", Amount : " + deposit.getDepositAmount())
+					.collect(Collectors.joining("], ")));
+		}
+		builder.append(" }");
+		builder.append(", customerId=");
+		builder.append(customer.getCustId());
+		builder.append("]");
+		return builder.toString();
+	}		
 }

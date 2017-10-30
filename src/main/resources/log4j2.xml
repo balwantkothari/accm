@@ -29,11 +29,11 @@
 	</Appenders>
 	
 	<Loggers>
-		<Root level="error">
-			<AppenderRef ref="InfoLog" />
-		</Root>
-		<Logger name="ErrorLog" level="error" additivity="false">
+		<Root level="info">
 			<AppenderRef ref="ErrorLog" />
+		</Root>
+		<Logger name="InfoLog" level="info" additivity="false">
+			<AppenderRef ref="InfoLog" />
 		</Logger>
 		<Logger name="DebugLog" level="debug" additivity="false">
 			<AppenderRef ref="DebugLog" />

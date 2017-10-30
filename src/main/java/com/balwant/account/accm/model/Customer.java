@@ -2,6 +2,7 @@ package com.balwant.account.accm.model;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.balwant.account.accm.util.AccmUtils;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -25,11 +28,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name="ACCOUNTS.CUSTOMER")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	@Transient
+	private final StringBuilder builder = new StringBuilder();
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="CUST_ID")
-	private int custId;
+	private Integer custId;
 
 	private String address;
 
@@ -38,7 +44,7 @@ public class Customer implements Serializable {
 	@Column(name="PARENT_NAME")
 	private String parentName;
 
-	private int phone;
+	private Integer phone;
 
 	private String village;
 
@@ -48,11 +54,11 @@ public class Customer implements Serializable {
 	@JsonManagedReference
 	private Set<Loan> loans;
 
-	public int getCustId() {
+	public Integer getCustId() {
 		return this.custId;
 	}
 
-	public void setCustId(int custId) {
+	public void setCustId(Integer custId) {
 		this.custId = custId;
 	}
 
@@ -80,11 +86,11 @@ public class Customer implements Serializable {
 		this.parentName = parentName;
 	}
 
-	public int getPhone() {
+	public Integer getPhone() {
 		return this.phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(Integer phone) {
 		this.phone = phone;
 	}
 
@@ -118,4 +124,28 @@ public class Customer implements Serializable {
 		return loan;
 	}
 
+	@Override
+	public String toString() {
+		builder.setLength(0);
+		builder.append("Customer [custId=");
+		builder.append(custId);
+		builder.append(", address=");
+		builder.append(address);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", parentName=");
+		builder.append(parentName);
+		builder.append(", phone=");
+		builder.append(phone);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", loanIds = {");
+		if(!AccmUtils.isNullOrEmpty(loans)) {
+			builder.append(loans.stream().map(loan -> (loan.getLoanId()).toString()).collect(Collectors.joining(",")));			
+		}
+		builder.append("}");
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }

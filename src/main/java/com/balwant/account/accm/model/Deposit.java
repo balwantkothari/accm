@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -26,13 +27,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Deposit implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Transient
+	private final StringBuilder builder = new StringBuilder();
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="DEPOSIT_ID")
-	private int depositId;
+	private Integer depositId;
 
 	@Column(name="DEPOSIT_AMOUNT")
-	private double depositAmount;
+	private Double depositAmount;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="DEPOSIT_DATE")
@@ -50,19 +54,19 @@ public class Deposit implements Serializable {
 	@JsonBackReference
 	private Loan loan;
 
-	public int getDepositId() {
+	public Integer getDepositId() {
 		return depositId;
 	}
 
-	public void setDepositId(int depositId) {
+	public void setDepositId(Integer depositId) {
 		this.depositId = depositId;
 	}
 
-	public double getDepositAmount() {
+	public Double getDepositAmount() {
 		return this.depositAmount;
 	}
 
-	public void setDepositAmount(double depositAmount) {
+	public void setDepositAmount(Double depositAmount) {
 		this.depositAmount = depositAmount;
 	}
 
@@ -98,4 +102,23 @@ public class Deposit implements Serializable {
 		this.loan = loan;
 	}
 
+	@Override
+	public String toString() {
+		builder.setLength(0);
+		builder.append("Deposit [depositId=");
+		builder.append(depositId);
+		builder.append(", depositAmount=");
+		builder.append(depositAmount);
+		builder.append(", depositDate=");
+		builder.append(depositDate);
+		builder.append(", depositsBy=");
+		builder.append(depositsBy);
+		builder.append(", depositsUser=");
+		builder.append(depositsUser);
+		builder.append(", loanId=");
+		builder.append(loan.getLoanId());
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }

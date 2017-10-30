@@ -8,7 +8,9 @@ public interface ICustomerDAO {
 
 	void createCustomer(Customer customer);
 
-	Customer getCustomer(int custId);
+	Customer getCustomerById(int custId);
+
+	List<Customer> getCustomerByName(String custName);
 
 	void updateCustomer(Customer customer);
 	

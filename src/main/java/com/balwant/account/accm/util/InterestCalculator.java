@@ -83,9 +83,6 @@ public class InterestCalculator {
 		
 		double amount = principal;
 		double timeInMonths = (((depositYear - loanYear )*12 + (depositMonth-loanMonth) + (depositDay-loanDay)/30));
-		System.out.println("Loan Date :" + loanDate.toGMTString());
-		System.out.println("Final Date :" + depositDate.toGMTString());		
-		System.out.println("Time in Months :" + timeInMonths);
 		if(timeInMonths > getReviseInMonths()) {
 			while(timeInMonths > getReviseInMonths()) {
 				loanCal.add(Calendar.MONTH, getReviseInMonths());
@@ -117,9 +114,6 @@ public class InterestCalculator {
 		
 		double amount = 0;
 		double timeInMonths = (((depositYear - loanYear)*12 + (depositMonth - loanMonth ) + (depositDay-loanDay)/30));
-		System.out.println("Loan Date :" + loanDate.toGMTString());
-		System.out.println("Final Date :" + depositDate.toGMTString());		
-		System.out.println("Time in Months :" + timeInMonths);
 		amount = principal + (principal * timeInMonths * rate)/100;
 		System.out.println("Amount ---" + amount);
 		amountDetails.put(depositDate, amount);

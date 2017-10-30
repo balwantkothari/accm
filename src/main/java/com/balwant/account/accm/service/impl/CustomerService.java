@@ -31,8 +31,8 @@ public class CustomerService implements ICustomerService {
 	}
 
 	@Override
-	public Customer getCustomer(int custId) {
-		return this.customerDAO.getCustomer(custId);
+	public Customer getCustomerById(int custId) {
+		return this.customerDAO.getCustomerById(custId);
 	}
 
 	@Override
@@ -48,6 +48,11 @@ public class CustomerService implements ICustomerService {
 	@Override
 	public List<Customer> getAllCustomers() {
 		return this.customerDAO.getAllCustomers();
+	}
+
+	@Override
+	public List<Customer> getCustomerByName(String custName) {
+		return this.customerDAO.getCustomerByName(custName);
 	}
 
 }

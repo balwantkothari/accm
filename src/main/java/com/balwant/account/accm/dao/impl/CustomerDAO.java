@@ -23,9 +23,16 @@ public class CustomerDAO implements ICustomerDAO {
 	}
 
 	@Override
-	public Customer getCustomer(int custId) {
+	public Customer getCustomerById(int custId) {
 		Session session = this.sessionFactory.getCurrentSession();
 		return (Customer) session.get(Customer.class, custId);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Customer> getCustomerByName(String custName) {
+		Session session = this.sessionFactory.getCurrentSession();
+		return (List<Customer>) session.get(Customer.class, custName);
 	}
 
 	@Override
